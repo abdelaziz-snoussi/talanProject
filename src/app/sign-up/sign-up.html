@@ -1,0 +1,64 @@
+<div class="auth-form">
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+    <h2>Créer un compte</h2>
+    
+    <div>
+      <label>Prénom *</label>
+      <input type="text" formControlName="firstName">
+      @if (signUpForm.get('firstName')?.errors?.['required']) {
+        <small>Ce champ est obligatoire</small>
+      }
+    </div>
+  
+    <div>
+      <label>Nom *</label>
+      <input type="text" formControlName="lastName">
+      @if (signUpForm.get('lastName')?.errors?.['required']) {
+        <small>Ce champ est obligatoire</small>
+      }
+    </div>
+  
+    <div>
+      <label>Email *</label>
+      <input type="email" formControlName="email">
+      @if (signUpForm.get('email')?.errors?.['required']) {
+        <small>Email requis</small>
+      }
+      @if (signUpForm.get('email')?.errors?.['pattern']) {
+        <small>Doit être un email Gmail</small>
+      }
+    </div>
+  
+    <div>
+      <label>Téléphone</label>
+      <input type="tel" formControlName="phone">
+    </div>
+  
+    <div>
+      <label>Mot de passe *</label>
+      <input type="password" formControlName="password">
+      @if (signUpForm.get('password')?.errors?.['required']) {
+        <small>Mot de passe requis</small>
+      }
+      @if (signUpForm.get('password')?.errors?.['minlength']) {
+        <small>8 caractères minimum</small>
+      }
+    </div>
+  
+    <div>
+      <label>Confirmer le mot de passe *</label>
+      <input type="password" formControlName="confirmPassword">
+      @if (signUpForm.errors?.['mismatch']) {
+        <small>Les mots de passe ne correspondent pas</small>
+      }
+    </div>
+  
+    <button type="submit" [disabled]="signUpForm.invalid">S'inscrire</button>
+    <p>Déjà un compte? <a routerLink="/signin">Se connecter</a></p>
+  </form>
+  @if (showSuccess) {
+    <div class="success-message">
+      Enregistré avec succès! ✅
+    </div>
+  }
+  </div>

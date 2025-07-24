@@ -1,0 +1,31 @@
+<div class="auth-form">
+<form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+    <h2>Connexion</h2>
+    <div>
+      <label>Email *</label>
+      <input type="email" formControlName="email">
+      @if (signInForm.get('email')?.errors?.['required']) {
+        <small>Email requis</small>
+      }
+      @if (signInForm.get('email')?.errors?.['email']) {
+        <small>Email invalide</small>
+      }
+    </div>
+  
+    <div>
+      <label>Mot de passe *</label>
+      <input type="password" formControlName="password">
+      @if (signInForm.get('password')?.errors?.['required']) {
+        <small>Mot de passe requis</small>
+      }
+    </div>
+  
+    <button type="submit" [disabled]="signInForm.invalid">Se connecter</button>
+    <p>Pas de compte? <a routerLink="/signup">S'inscrire</a></p>
+  </form>
+  @if (showSuccess) {
+    <div class="success-message">
+      Connecté avec succès! ✅
+    </div>
+  }
+  </div>
