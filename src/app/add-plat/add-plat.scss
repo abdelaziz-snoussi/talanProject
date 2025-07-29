@@ -1,0 +1,126 @@
+.corporate-menu {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+  
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin: 20px 0 30px;
+    }
+  }
+  
+  .navigation {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+  
+    .nav-link {
+      padding: 8px 16px;
+      border-radius: 4px;
+      color: #34495e;
+      font-weight: 500;
+      transition: all 0.3s;
+  
+      &:hover {
+        background-color: #f8f9fa;
+      }
+  
+      &.active {
+        background-color: #3498db;
+        color: white;
+      }
+    }
+  }
+  
+  .menu-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+  }
+  
+  .category {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  
+    h3 {
+      margin-top: 0;
+      color: #2c3e50;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+  }
+  
+  .items {
+    margin-top: 15px;
+  }
+  
+  .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  
+    &:last-child {
+      border-bottom: none;
+    }
+  
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+  
+      &:hover {
+        background: #2980b9;
+      }
+    }
+  }
+  
+  .selected-items {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  
+    h3 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+  
+    .item {
+      button {
+        background: #e74c3c;
+        
+        &:hover {
+          background: #c0392b;
+        }
+      }
+    }
+  }
+  
+  .empty {
+    color: #7f8c8d;
+    font-style: italic;
+    text-align: center;
+    padding: 15px 0;
+  }
+  
+  .total {
+    font-weight: bold;
+    font-size: 1.1em;
+    text-align: right;
+    margin-top: 15px;
+    color: #27ae60;
+  }

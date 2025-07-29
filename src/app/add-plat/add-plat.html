@@ -1,1 +1,35 @@
-<p>add-plat works!</p>
+<div class="corporate-menu">
+    <nav class="navigation">
+      <a routerLink="/signin" class="nav-link">Connexion</a>
+      <a routerLink="/signup" class="nav-link">Inscription</a>
+      <a routerLink="/addplat" class="nav-link active">Composer Menu</a>
+    </nav>
+  
+    <h2>Composez Votre Repas</h2>
+  
+    <div class="menu-categories">
+      <div class="category" *ngFor="let category of categories">
+        <h3>{{ getCategoryName(category) }}</h3>
+        <div class="items">
+          <div class="item" *ngFor="let plat of availablePlats[category]">
+            <span>{{ plat.name }} - {{ plat.price }} DT</span>
+            <button (click)="addToMenu(plat)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="selected-items">
+      <h3>Votre Sélection</h3>
+      <div *ngIf="userMenu.length === 0" class="empty">
+        Aucun élément sélectionné
+      </div>
+      <div class="item" *ngFor="let plat of userMenu; let i = index">
+        <span>{{ plat.name }} - {{ plat.price }} DT</span>
+        <button (click)="removeFromMenu(i)">×</button>
+      </div>
+      <div class="total" *ngIf="userMenu.length > 0">
+        Total: {{ calculateTotal() }} DT
+      </div>
+    </div>
+  </div>

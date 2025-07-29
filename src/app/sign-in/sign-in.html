@@ -1,31 +1,60 @@
-<div class="auth-form">
-<form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
-    <h2>Connexion</h2>
-    <div>
-      <label>Email *</label>
-      <input type="email" formControlName="email">
-      @if (signInForm.get('email')?.errors?.['required']) {
-        <small>Email requis</small>
-      }
-      @if (signInForm.get('email')?.errors?.['email']) {
-        <small>Email invalide</small>
-      }
-    </div>
-  
-    <div>
-      <label>Mot de passe *</label>
-      <input type="password" formControlName="password">
-      @if (signInForm.get('password')?.errors?.['required']) {
-        <small>Mot de passe requis</small>
-      }
-    </div>
-  
-    <button type="submit" [disabled]="signInForm.invalid">Se connecter</button>
-    <p>Pas de compte? <a routerLink="/signup">S'inscrire</a></p>
-  </form>
-  @if (showSuccess) {
-    <div class="success-message">
-      Connecté avec succès! ✅
-    </div>
-  }
+<div class="auth-container">
+  <div class="auth-form">
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+      <h2>Connexion</h2>
+      
+      <div class="form-group">
+        <label for="email">Email *</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          [class.invalid]="signInForm.get('email')?.invalid && signInForm.get('email')?.touched"
+          placeholder="votre@email.com"
+        >
+        @if (signInForm.get('email')?.errors?.['required'] && signInForm.get('email')?.touched) {
+          <small class="error-message">Email requis</small>
+        }
+        @if (signInForm.get('email')?.errors?.['email'] && signInForm.get('email')?.touched) {
+          <small class="error-message">Format d'email invalide</small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe *</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          [class.invalid]="signInForm.get('password')?.invalid && signInForm.get('password')?.touched"
+          placeholder="••••••••"
+        >
+        @if (signInForm.get('password')?.errors?.['required'] && signInForm.get('password')?.touched) {
+          <small class="error-message">Mot de passe requis</small>
+        }
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="signInForm.invalid || isLoading"
+        [class.loading]="isLoading"
+      >
+        @if (isLoading) {
+          <span class="spinner"></span>
+        } @else {
+          Se connecter
+        }
+      </button>
+
+      <p class="signup-link">
+        Pas de compte? <a routerLink="/signup">S'inscrire</a>
+      </p>
+    </form>
+
+    @if (showSuccess) {
+      <div class="success-message">
+        Connecté avec succès! Redirection en cours...
+      </div>
+    }
   </div>
+</div>

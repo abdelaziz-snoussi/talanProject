@@ -1,30 +1,37 @@
-import { Component,inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import{
-  FormBuilder,Validators,
-  ReactiveFormsModule,
-  AbstractControl
-} from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+
 @Component({
-  standalone:true,
+  standalone: true,
   selector: 'app-sign-in',
-  imports: [ReactiveFormsModule,RouterLink],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './sign-in.html',
-  styleUrl: './sign-in.scss'
+  styleUrls: ['./sign-in.scss']
 })
 export class SignIn {
-   private fb=inject(FormBuilder);
-   signInForm=this.fb.group({
-    email:['',[Validators.required,Validators.email]],
-    password:['',Validators.required]
-   });
-   showSuccess = false; 
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  
+  signInForm = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required]
+  });
 
-  onSubmit() {
-    if (this.signInForm.valid) {
-      console.log('Form submitted', this.signInForm.value);
-      this.showSuccess = true; 
-      setTimeout(() => this.showSuccess = false, 3000);
+  showSuccess = false;
+  isLoading = false;
+
+  async onSubmit() {
+    if (this.signInForm.invalid) return;
+
+    this.isLoading = true;
+    
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      this.showSuccess = true;
+      setTimeout(() => this.router.navigate(['/addplat']), 2000);
+    } finally {
+      this.isLoading = false;
     }
   }
 }

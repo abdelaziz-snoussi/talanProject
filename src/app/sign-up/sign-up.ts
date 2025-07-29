@@ -1,54 +1,47 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { 
-  FormBuilder, 
-  Validators, 
-  ReactiveFormsModule, 
-  FormGroup, 
-  AbstractControl 
-} from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
 
 @Component({
   standalone: true,
   selector: 'app-sign-up',
-  imports: [ReactiveFormsModule,RouterLink],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './sign-up.html',
-  styleUrl: './sign-up.scss'
+  styleUrls: ['./sign-up.scss']
 })
 export class SignUp {
-  private fb = inject(FormBuilder);  
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  
   signUpForm = this.fb.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
-    email: ['', [
-      Validators.required, 
-      Validators.email
-    ]],
+    email: ['', [Validators.required, Validators.email]],
     phone: [''],
-    password: ['', [
-      Validators.required, 
-      Validators.minLength(8)
-    ]],
+    password: ['', [Validators.required, Validators.minLength(8)]],
     confirmPassword: ['', Validators.required]
-  }, { 
-    validators: this.passwordMatchValidator.bind(this) 
-  });
+  }, { validators: this.passwordMatchValidator });
 
-  passwordMatchValidator(control: AbstractControl) {
-    const formGroup = control as FormGroup;
-    const password = formGroup.get('password')?.value;
-    const confirmPassword = formGroup.get('confirmPassword')?.value;
-    
-    return password === confirmPassword ? null : { mismatch: true };
+  showSuccess = false;
+  isLoading = false;
+
+  passwordMatchValidator(form: FormGroup) {
+    return form.get('password')?.value === form.get('confirmPassword')?.value
+      ? null
+      : { mismatch: true };
   }
 
-  showSuccess = false; 
+  async onSubmit() {
+    if (this.signUpForm.invalid) return;
 
-  onSubmit() {
-    if (this.signUpForm.valid) {
-      console.log('Form submitted', this.signUpForm.value);
+    this.isLoading = true;
+    
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1500));
       this.showSuccess = true;
-      setTimeout(() => this.showSuccess = false, 3000);
+      setTimeout(() => this.router.navigate(['/signin']), 2000);
+    } finally {
+      this.isLoading = false;
     }
   }
 }
